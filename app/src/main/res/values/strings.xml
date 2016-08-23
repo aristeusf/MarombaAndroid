@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Maromba</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Senha</string>
+    <string name="action_sign_in">Registrar</string>
+    <string name="action_sign_in_short">Entrar</string>
+    <string name="error_invalid_email">Email Inválido</string>
+    <string name="error_email_nao_existe">Usuário não encontrado</string>
+    <string name="error_invalid_password">Senha muito curta</string>
+    <string name="error_incorrect_password">Usuário ou senha Inválida</string>
+    <string name="error_field_required">Campo Obrigatório</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="title_activity_cadastro">Cadastro</string>
+    <string name="nome">Nome</string>
+    <string name="newcad">Cadastrar</string>
+    <string name="esqueceu">Esqueceu a Senha?</string>
+    <string name="telefone">Telefone</string>
+    <string name="cpf">CPF</string>
+    <string name="endereco">Endereço</string>
+    <string name="email">E-mail</string>
+
+
+    <string-array name="TipoCadastro">
+        <item>Aluno</item>
+        <item>Professor</item>
+    </string-array>
+
+    <string-array name="AcademiasTeste">
+        <item>Academia de Teste 1</item>
+        <item>Academia de Teste 2</item>
+    </string-array>
+</resources>
