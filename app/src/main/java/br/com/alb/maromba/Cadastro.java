@@ -1,5 +1,7 @@
 package br.com.alb.maromba;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -12,6 +14,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Cadastro extends AppCompatActivity {
 
@@ -21,6 +28,9 @@ public class Cadastro extends AppCompatActivity {
     public EditText Nome;
     public LinearLayout Dados;
     public LinearLayout.LayoutParams params;
+    private spnAcademias[] spnacademias;
+    private JSONArray retorno;
+    private spnAdapterAcademias adpAcademias;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,17 +39,11 @@ public class Cadastro extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         tpCadastro  = (Spinner)findViewById(R.id.tpCadastro);
         academias  = (Spinner)findViewById(R.id.academias);
+
+        academias.setAdapter(serverAcademias.srvAdapterAcademias);
+
         DescAcademias = (TextView)findViewById(R.id.descacademias);
         Nome = (EditText)findViewById(R.id.nome);
 
@@ -51,24 +55,7 @@ public class Cadastro extends AppCompatActivity {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0:
-                        academias.setVisibility(View.INVISIBLE);
-                        DescAcademias.setVisibility(View.INVISIBLE);
 
-                        params.setMargins(0, 0, 0, 0);
-
-                        Dados.setLayoutParams(params);
-                        break;
-                    case 1:
-                        academias.setVisibility(View.VISIBLE);
-                        DescAcademias.setVisibility(View.VISIBLE);
-
-                        params.setMargins(0,20,0,0);
-
-                        Dados.setLayoutParams(params);
-                        break;
-                }
             }
 
             @Override
@@ -76,6 +63,61 @@ public class Cadastro extends AppCompatActivity {
 
             }
         });
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+    }
+
+    private void CarregaAcademias() throws JSONException {
+
+        String titulo = "Carregando Academias";
+        String mensagem = "Aguarde por favor...";
+        final Context context = this;
+
+        final ProgressDialog dialog = ProgressDialog.show(this, titulo, mensagem, true, false);
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run() {
+
+                serverAcademias.context = context;
+                new serverAcademias().execute("GetCadastro");
+
+                while (retorno == null) {
+                    retorno = serverAcademias.retAcademias;
+                }
+
+                spnacademias = new spnAcademias[retorno.length()];
+                for(int i = 0; i < retorno.length(); i++)
+                {
+                    try {
+                        JSONObject json = retorno.getJSONObject(i);
+
+                        spnacademias[i] = new spnAcademias();
+
+                        spnacademias[i].setId(json.getString("_id"));
+                        spnacademias[i].setRazao(json.getString("razaosocial"));
+                    }
+                    catch (JSONException exp){
+
+                    }
+                }
+
+                adpAcademias = new spnAdapterAcademias(context,android.R.layout.simple_spinner_dropdown_item, spnacademias);
+
+                academias.setAdapter(adpAcademias);
+
+                dialog.dismiss();
+
+            }
+        }).start();
+
     }
 
 }

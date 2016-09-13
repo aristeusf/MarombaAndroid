@@ -22,7 +22,8 @@
     <string name="cpf">CPF</string>
     <string name="endereco">Endereço</string>
     <string name="email">E-mail</string>
-
+    <string name="senha">Senha</string>
+    <string name="URL">http://52.39.211.162:3000/</string>
 
     <string-array name="TipoCadastro">
         <item>Aluno</item>
@@ -33,4 +34,10 @@
         <item>Academia de Teste 1</item>
         <item>Academia de Teste 2</item>
     </string-array>
+
+    <string-array name="ProfessoresTeste">
+        <item>Professor Teste 1</item>
+        <item>Professor Teste 2</item>
+    </string-array>
 </resources>
+

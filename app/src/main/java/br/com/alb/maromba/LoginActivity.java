@@ -3,6 +3,8 @@ package br.com.alb.maromba;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -30,6 +32,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +68,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private int Carregou = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -302,8 +308,32 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     }
     public void New(View view){
-        startActivity(new Intent(this, Cadastro.class));
-        finish();
+
+        String titulo = "Carregando Academias";
+        String mensagem = "Aguarde por favor...";
+        final Context context = this;
+
+        final ProgressDialog dialog = ProgressDialog.show(this, titulo, mensagem, true, false);
+
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run() {
+
+                serverAcademias.context = context;
+                new serverAcademias().execute("GetCadastro");
+
+                while (Carregou == 0) {
+                    Carregou = serverAcademias.Carregou;
+                }
+
+                dialog.dismiss();
+
+                startActivity(new Intent(context, Cadastro.class));
+                finish();
+
+            }
+        }).start();
     }
 
 

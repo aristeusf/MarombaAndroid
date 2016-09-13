@@ -43,28 +43,34 @@
 
                 </Spinner>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/academiaslo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
                 <TextView
                     android:id="@+id/descacademias"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Academias"
-                    android:visibility="invisible"/>
+                    android:layout_marginTop="10dp"/>
 
                 <Spinner
                     android:id="@+id/academias"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawSelectorOnTop="true">
+
+                </Spinner>
+
+                <TextView
+                    android:id="@+id/descprofessores"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Professores"
+                    android:layout_marginTop="10dp"/>
+
+                <Spinner
+                    android:id="@+id/professores"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:drawSelectorOnTop="true"
-                    android:entries="@array/AcademiasTeste"
-                    android:visibility="invisible">
+                    android:entries="@array/ProfessoresTeste">
 
                 </Spinner>
 
@@ -74,7 +80,8 @@
                 android:id="@+id/dados"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginTop="10dp">
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -159,6 +166,24 @@
                         android:hint="@string/email"
                         android:imeActionId="@+id/emailact"
                         android:imeActionLabel="@string/email"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="textEmailAddress"
+                        android:maxLines="1"
+                        android:singleLine="true"/>
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/senha"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/senha"
+                        android:imeActionId="@+id/emailact"
+                        android:imeActionLabel="@string/senha"
                         android:imeOptions="actionUnspecified"
                         android:inputType="textEmailAddress"
                         android:maxLines="1"
