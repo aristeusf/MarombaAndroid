@@ -18,6 +18,7 @@ public class serverAcademias extends AsyncTask<String, Void, String[]> {
 
     public String URL = "";
     public static JSONArray retAcademias;
+    public static JSONArray retProfessores;
     public static Context context;
     public static spnAdapterAcademias srvAdapterAcademias;
     public static int Carregou = 0;
@@ -71,13 +72,24 @@ public class serverAcademias extends AsyncTask<String, Void, String[]> {
                     spnacademias[i].setId(json.getString("_id"));
                     spnacademias[i].setRazao(json.getString("razaosocial"));
 
-                    if(Primeiro == 0){
+                    if(i == 0){
 
-                        JSONArray professores = 
+                        //JSONArray professores =
 
-                        //String professores = HttpRequest.get(url).body();
+                        String urlProfessores = context.getResources().getString(R.string.URL) +
+                                                "/professores/" +
+                                                json.getString("_id");
 
-                        //retAcademias = new JSONArray(conteudo);
+                        String professores = HttpRequest.put(urlProfessores).body();
+
+                        retProfessores = new JSONArray(professores);
+
+                        for (int ii = 0; ii < retProfessores.length(); i++)
+                        {
+                            JSONObject profObj = retProfessores.getJSONObject(ii);
+
+                            
+                        }
 
                     }
                 }
@@ -88,12 +100,10 @@ public class serverAcademias extends AsyncTask<String, Void, String[]> {
 
             srvAdapterAcademias = new spnAdapterAcademias(context,android.R.layout.simple_spinner_dropdown_item, spnacademias);
 
-            Carregou = 1;
-
         }
         catch (Exception exp)
         {
-            Carregou = 1;
+
         }
 
     }
